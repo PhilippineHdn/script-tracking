@@ -24,5 +24,10 @@ for (const oneParam in queryParams) {
   }
 };
 
-const nextURL = url.href.split('?')?.[0];
+const onlyQuery = url.search.slice(1);
+const arrayOfEachQuery = onlyQuery.split('&');
+const comparedWithFilterQuery = arrayOfEachQuery.filter(a => !filter.includes(a.split('=')[0]));
+const newQueryUrl = comparedWithFilterQuery[0] ? `?${comparedWithFilterQuery.join('&')}` : '';
+
+const nextURL = `${url.href.split('?')?.[0]}${newQueryUrl}`;
 window.history.pushState({}, document.title, nextURL);
